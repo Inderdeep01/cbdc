@@ -1,0 +1,304 @@
+version: '3.7'
+
+volumes:
+  orderer.cbdc:
+  orderer2.cbdc:
+  orderer3.cbdc:
+  orderer4.cbdc:
+  peer0.rbi.cbdc:
+  peer0.hdfc.bank.cbdc:
+  peer0.axis.bank.cbdc:
+
+networks:
+  test:
+    name: cbdc_network
+
+services:
+
+  orderer.cbdc:
+    container_name: orderer.cbdc
+    image: hyperledger/fabric-orderer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_LOGGING_SPEC=INFO
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_LISTENPORT=7050
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
+      # enabled TLS
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_CLUSTER_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_GENERAL_BOOTSTRAPMETHOD=none
+      - ORDERER_CHANNELPARTICIPATION_ENABLED=true
+      - ORDERER_ADMIN_TLS_ENABLED=true
+      - ORDERER_ADMIN_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_ADMIN_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_ADMIN_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_ADMIN_TLS_CLIENTROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_ADMIN_LISTENADDRESS=0.0.0.0:7053
+      - ORDERER_OPERATIONS_LISTENADDRESS=orderer.cbdc:9443
+      - ORDERER_METRICS_PROVIDER=prometheus
+    working_dir: /root
+    command: orderer
+    volumes:
+      - ../organizations/ordererOrganizations/cbdc/orderers/orderer.cbdc/msp:/var/hyperledger/orderer/msp
+      - ../organizations/ordererOrganizations/cbdc/orderers/orderer.cbdc/tls/:/var/hyperledger/orderer/tls
+      - orderer.cbdc:/var/hyperledger/production/orderer
+    ports:
+      - 7050:7050
+      - 7053:7053
+      - 9443:9443
+    networks:
+      - test
+
+  orderer2.cbdc:
+    container_name: orderer2.cbdc
+    image: hyperledger/fabric-orderer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_LOGGING_SPEC=INFO
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_LISTENPORT=7052
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
+      # enabled TLS
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_CLUSTER_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_GENERAL_BOOTSTRAPMETHOD=none
+      - ORDERER_CHANNELPARTICIPATION_ENABLED=true
+      - ORDERER_ADMIN_TLS_ENABLED=true
+      - ORDERER_ADMIN_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_ADMIN_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_ADMIN_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_ADMIN_TLS_CLIENTROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_ADMIN_LISTENADDRESS=0.0.0.0:7055
+      - ORDERER_OPERATIONS_LISTENADDRESS=orderer2.cbdc:9446
+      - ORDERER_METRICS_PROVIDER=prometheus
+    working_dir: /root
+    command: orderer
+    volumes:
+      - ../organizations/ordererOrganizations/cbdc/orderers/orderer2.cbdc/msp:/var/hyperledger/orderer/msp
+      - ../organizations/ordererOrganizations/cbdc/orderers/orderer2.cbdc/tls/:/var/hyperledger/orderer/tls
+      - orderer2.cbdc:/var/hyperledger/production/orderer
+    ports:
+      - 7052:7052
+      - 7055:7055
+      - 9446:9446
+    networks:
+      - test
+
+  orderer3.cbdc:
+    container_name: orderer3.cbdc
+    image: hyperledger/fabric-orderer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_LOGGING_SPEC=INFO
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_LISTENPORT=7056
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
+      # enabled TLS
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_CLUSTER_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_GENERAL_BOOTSTRAPMETHOD=none
+      - ORDERER_CHANNELPARTICIPATION_ENABLED=true
+      - ORDERER_ADMIN_TLS_ENABLED=true
+      - ORDERER_ADMIN_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_ADMIN_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_ADMIN_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_ADMIN_TLS_CLIENTROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_ADMIN_LISTENADDRESS=0.0.0.0:7057
+      - ORDERER_OPERATIONS_LISTENADDRESS=orderer3.cbdc:9447
+      - ORDERER_METRICS_PROVIDER=prometheus
+    working_dir: /root
+    command: orderer
+    volumes:
+      - ../organizations/ordererOrganizations/cbdc/orderers/orderer3.cbdc/msp:/var/hyperledger/orderer/msp
+      - ../organizations/ordererOrganizations/cbdc/orderers/orderer3.cbdc/tls/:/var/hyperledger/orderer/tls
+      - orderer3.cbdc:/var/hyperledger/production/orderer
+    ports:
+      - 7056:7056
+      - 7057:7057
+      - 9447:9447
+    networks:
+      - test
+
+  orderer4.cbdc:
+    container_name: orderer4.cbdc
+    image: hyperledger/fabric-orderer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_LOGGING_SPEC=INFO
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_LISTENPORT=7058
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
+      # enabled TLS
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_CLUSTER_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_GENERAL_BOOTSTRAPMETHOD=none
+      - ORDERER_CHANNELPARTICIPATION_ENABLED=true
+      - ORDERER_ADMIN_TLS_ENABLED=true
+      - ORDERER_ADMIN_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_ADMIN_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_ADMIN_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_ADMIN_TLS_CLIENTROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_ADMIN_LISTENADDRESS=0.0.0.0:7059
+      - ORDERER_OPERATIONS_LISTENADDRESS=orderer4.cbdc:9448
+      - ORDERER_METRICS_PROVIDER=prometheus
+    working_dir: /root
+    command: orderer
+    volumes:
+      - ../organizations/ordererOrganizations/cbdc/orderers/orderer4.cbdc/msp:/var/hyperledger/orderer/msp
+      - ../organizations/ordererOrganizations/cbdc/orderers/orderer4.cbdc/tls/:/var/hyperledger/orderer/tls
+      - orderer4.cbdc:/var/hyperledger/production/orderer
+    ports:
+      - 7058:7058
+      - 7059:7059
+      - 9448:9448
+    networks:
+      - test
+
+
+
+
+  peer0.rbi.cbdc:
+    container_name: peer0.rbi.cbdc
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CFG_PATH=/etc/hyperledger/peercfg
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=peer0.rbi.cbdc
+      - CORE_PEER_ADDRESS=peer0.rbi.cbdc:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.rbi.cbdc:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.rbi.cbdc:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.rbi.cbdc:7051
+      - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=peer0.rbi.cbdc:9444
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0org1"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+    volumes:
+      - ../organizations/peerOrganizations/rbi.cbdc/peers/peer0.rbi.cbdc:/etc/hyperledger/fabric
+      - peer0.rbi.cbdc:/var/hyperledger/production
+    working_dir: /root
+    command: peer node start
+    ports:
+      - 7051:7051
+      - 9444:9444
+    networks:
+      - test
+
+  peer0.hdfc.bank.cbdc:
+    container_name: peer0.hdfc.bank.cbdc
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CFG_PATH=/etc/hyperledger/peercfg
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=peer0.hdfc.bank.cbdc
+      - CORE_PEER_ADDRESS=peer0.hdfc.bank.cbdc:9051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.hdfc.bank.cbdc:9052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.hdfc.bank.cbdc:9051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.hdfc.bank.cbdc:9051
+      - CORE_PEER_LOCALMSPID=Org2MSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=peer0.hdfc.bank.cbdc:9445
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0org2"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+    volumes:
+      - ../organizations/peerOrganizations/hdfc.bank.cbdc/peers/peer0.hdfc.bank.cbdc:/etc/hyperledger/fabric
+      - peer0.hdfc.bank.cbdc:/var/hyperledger/production
+    working_dir: /root
+    command: peer node start
+    ports:
+      - 9051:9051
+      - 9445:9445
+    networks:
+      - test
+
+  peer0.axis.bank.cbdc:
+    container_name: peer0.axis.bank.cbdc
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CFG_PATH=/etc/hyperledger/peercfg
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=peer0.axis.bank.cbdc
+      - CORE_PEER_ADDRESS=peer0.axis.bank.cbdc:10051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:10051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.axis.bank.cbdc:9052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.axis.bank.cbdc:10051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.axis.bank.cbdc:10051
+      - CORE_PEER_LOCALMSPID=Org2MSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=peer0.axis.bank.cbdc:9446
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0org2"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+    volumes:
+      - ../organizations/peerOrganizations/axis.bank.cbdc/peers/peer0.axis.bank.cbdc:/etc/hyperledger/fabric
+      - peer0.axis.bank.cbdc:/var/hyperledger/production
+    working_dir: /root
+    command: peer node start
+    ports:
+      - 10051:10051
+      - 9446:9446
+    networks:
+      - test

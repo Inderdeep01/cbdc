@@ -1,0 +1,82 @@
+{
+	"name": "retail",
+	"version": "1.0.0",
+	"client": {
+		"tlsEnable": true,
+		"adminCredential": {
+			"id": "exploreradmin",
+			"password": "exploreradminpw"
+		},
+		"enableAuthentication": true,
+		"organization": "RBIMSP",
+		"connection": {
+			"timeout": {
+				"peer": {
+					"endorser": "300"
+				},
+				"orderer": "300"
+			}
+		}
+	},
+	"channels": {
+		"retail": {
+			"peers": {
+				"peer0.rbi.cbdc": {},
+				"peer0.hdfc.bank.cbdc": {},
+				"peer0.axis.bank.cbdc": {}
+			}
+		}
+	},
+	"organizations": {
+		"RBIMSP": {
+			"mspid": "RBIMSP",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/rbi.cbdc/users/Admin@rbi.cbdc/msp/keystore/priv_sk"
+			},
+			"peers": ["peer0.rbi.cbdc"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/rbi.cbdc/users/Admin@rbi.cbdc/msp/signcerts/Admin@rbi.cbdc-cert.pem"
+			}
+		},
+		"HDFCBankMSP": {
+			"mspid": "HDFCBankMSP",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/hdfc.bank.cbdc/users/Admin@hdfc.bank.cbdc/msp/keystore/priv_sk"
+			},
+			"peers": ["peer0.hdfc.bank.cbdc"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/hdfc.bank.cbdc/users/Admin@hdfc.bank.cbdc/msp/signcerts/Admin@hdfc.bank.cbdc-cert.pem"
+			}
+		},
+		"AxisBankMSP": {
+			"mspid": "AxisBankMSP",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/axis.bank.cbdc/users/Admin@axis.bank.cbdc/msp/keystore/priv_sk"
+			},
+			"peers": ["peer0.hdfc.bank.cbdc"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/axis.bank.cbdc/users/Admin@axis.bank.cbdc/msp/signcerts/Admin@axis.bank.cbdc-cert.pem"
+			}
+		}
+	},
+	"peers": {
+		"peer0.rbi.cbdc": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/rbi.cbdc/peers/peer0.rbi.cbdc/tls/ca.crt"
+			},
+			"url": "grpcs://peer0.rbi.cbdc:7051"
+		},
+		"peer0.hdfc.bank.cbdc": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/hdfc.bank.cbdc/peers/peer0.hdfc.bank.cbdc/tls/ca.crt"
+			},
+			"url": "grpcs://peer0.hdfc.bank.cbdc:9051"
+		},
+		"peer0.axis.bank.cbdc": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/axis.bank.cbdc/peers/peer0.axis.bank.cbdc/tls/ca.crt"
+			},
+			"url": "grpcs://peer0.axis.bank.cbdc:10051"
+		}
+	}
+}
